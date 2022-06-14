@@ -1,7 +1,6 @@
 const express = require("express");
 const cors = require("cors")
 const fs = require("fs");
-const todoListData = require("./todoList/todoList.json");
 
 const app = express();
 const PORT = 3000;
@@ -34,7 +33,7 @@ app.post('/todolists', (req, res) => {
     }
 
     let todoListData = require("./todoList/todoList.json");
-    const id = parseInt(todoListData[todoListData.length - 1].id) + 1;
+    const id = todoListData.length === 0 ? 1 : parseInt(todoListData[todoListData.length - 1].id) + 1;
     todoListData.push({
         id: id,
         title: body.title,
@@ -56,7 +55,7 @@ app.delete('/todoLists/:id', (req, res) => {
 
     let todoListData = require("./todoList/todoList.json");
     for (let i = 0; i < todoListData.length; i++) {
-        if(parseInt(todoListData[i].id) === id) {
+        if(todoListData[i].id === id) {
             todoListData.splice(i, 1);
         }
     }
